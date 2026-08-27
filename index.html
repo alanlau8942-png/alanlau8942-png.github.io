@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录</title>
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#1e293b;
+    --accent:#38bdf8; --accent2:#818cf8;
+    --text:#e2e8f0; --muted:#94a3b8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 800px at 20% -10%, #1e293b 0%, var(--bg1) 55%);
+    color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .glow{position:fixed;border-radius:50%;filter:blur(90px);opacity:.35;z-index:0}
+  .g1{width:420px;height:420px;background:var(--accent);top:-120px;right:-80px}
+  .g2{width:380px;height:380px;background:var(--accent2);bottom:-100px;left:-60px}
+  .card{
+    position:relative;z-index:1;width:360px;max-width:92%;
+    padding:36px 34px;
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;backdrop-filter:blur(12px);
+    box-shadow:0 30px 60px rgba(0,0,0,.45);
+  }
+  h1{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:26px}
+  label{display:block;font-size:13px;color:var(--muted);margin:16px 0 6px}
+  input{
+    width:100%;padding:12px 14px;border-radius:10px;
+    border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);
+    color:var(--text);font-size:15px;outline:none;transition:.2s;
+  }
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.15)}
+  button{
+    width:100%;margin-top:26px;padding:13px;border:none;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#0f172a;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;
+  }
+  button:hover{opacity:.9;transform:translateY(-1px)}
+  .err{color:#f87171;font-size:13px;margin-top:14px;min-height:18px}
+  #welcome{
+    position:relative;z-index:1;text-align:center;display:none;
+  }
+  #welcome h2{font-size:24px;font-weight:800}
+  #welcome p{color:var(--muted);margin-top:12px;font-size:15px}
+  #logout{margin-top:24px}
+  .foot{position:fixed;bottom:16px;left:0;right:0;text-align:center;color:var(--muted);font-size:12px;z-index:1}
+</style>
+</head>
+<body>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <!-- 登录框 -->
+  <div class="card" id="loginBox">
+    <h1>欢迎登录</h1>
+    <div class="sub">请输入账号和密码</div>
+    <form id="form">
+      <label>账号</label>
+      <input type="text" id="user" autocomplete="username" placeholder="请输入账号">
+      <label>密码</label>
+      <input type="password" id="pass" autocomplete="current-password" placeholder="请输入密码">
+      <button type="submit">登录</button>
+      <div class="err" id="err"></div>
+    </form>
+  </div>
+
+  <!-- 登录后空页 -->
+  <div id="welcome">
+    <div style="font-size:52px;margin-bottom:10px">👋</div>
+    <h2>登录成功</h2>
+    <p>这里啥也没有。<br>你已登录 :)</p>
+    <button id="logout" style="width:auto;padding:12px 28px">退出登录</button>
+  </div>
+
+  <div class="foot">登录页示例 · Cloudflare Pages 部署</div>
+
+<script>
+  const U = "阿D密", P = "阿D密";
+  const box = document.getElementById('loginBox');
+  const wel = document.getElementById('welcome');
+  const err = document.getElementById('err');
+
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const u = document.getElementById('user').value;
+    const p = document.getElementById('pass').value;
+    if(u === U && p === P){
+      box.style.display = 'none';
+      wel.style.display = 'block';
+    } else {
+      err.textContent = '账号或密码错误';
+    }
+  });
+
+  document.getElementById('logout').addEventListener('click', function(){
+    wel.style.display = 'none';
+    box.style.display = 'block';
+    document.getElementById('user').value = '';
+    document.getElementById('pass').value = '';
+    err.textContent = '';
+  });
+</script>
+</body>
+</html>
